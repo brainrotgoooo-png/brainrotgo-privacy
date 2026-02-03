@@ -4,55 +4,293 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SEMLAKI LLC — Brainrot Go Support</title>
+
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 900px; margin: 32px auto; padding: 0 16px; line-height: 1.5; }
-    header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #ddd; }
-    .brand { font-size: 28px; font-weight: 800; margin: 0; }
-    .sub { margin: 6px 0 10px; color: #444; }
-    nav a { margin-right: 12px; }
-    .card { background: #f6f6f6; padding: 16px; border-radius: 10px; margin: 16px 0; }
-    ul { margin-top: 8px; }
+    :root{
+      --bg: #ffffff;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --card: #f9fafb;
+      --link: #2563eb;
+      --linkHover: #1d4ed8;
+      --chip: #eef2ff;
+      --chipText: #3730a3;
+      --shadow: 0 10px 30px rgba(0,0,0,.06);
+      --radius: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --bg: #0b1220;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --border: rgba(255,255,255,.12);
+        --card: rgba(255,255,255,.06);
+        --link: #93c5fd;
+        --linkHover: #bfdbfe;
+        --chip: rgba(147,197,253,.12);
+        --chipText: #bfdbfe;
+        --shadow: 0 10px 30px rgba(0,0,0,.35);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(37,99,235,.12), transparent 60%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(99,102,241,.10), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { color: var(--linkHover); text-decoration: underline; }
+
+    .container{
+      max-width: 920px;
+      margin: 28px auto;
+      padding: 0 16px 60px;
+    }
+
+    header{
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 18px 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .toprow{
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .brand{
+      margin: 0;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      font-size: 22px;
+    }
+
+    .sub{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .chips{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .chip{
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--chipText);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid rgba(99,102,241,.18);
+    }
+
+    nav{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .navlink{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      font-weight: 650;
+      font-size: 13px;
+      text-decoration: none;
+    }
+    .navlink:hover{
+      text-decoration: none;
+      border-color: rgba(37,99,235,.35);
+    }
+
+    main{
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.2;
+      letter-spacing: -0.3px;
+    }
+
+    .lead{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    h2{
+      margin-top: 22px;
+      font-size: 18px;
+      letter-spacing: -0.1px;
+    }
+
+    ul{
+      margin: 10px 0 10px 20px;
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 780px){
+      .grid{ grid-template-columns: 1.2fr .8fr; }
+    }
+
+    .card{
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 14px;
+      padding: 14px 14px;
+    }
+
+    .card h3{
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+
+    .card p{ margin: 0; }
+
+    .pill{
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.02);
+    }
+
+    @media (prefers-color-scheme: dark){
+      .pill{ background: rgba(255,255,255,.04); }
+    }
+
+    code{
+      background: rgba(0,0,0,.04);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 0.95em;
+    }
+
+    @media (prefers-color-scheme: dark){
+      code{ background: rgba(255,255,255,.06); }
+    }
+
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
   </style>
 </head>
+
 <body>
+  <div class="container">
 
-<header>
-  <p class="brand">SEMLAKI LLC</p>
-  <p class="sub">Mobile app development & digital products.</p>
-  <p><strong>Contact:</strong> <a href="mailto:brainrotgoooo@gmail.com">brainrotgoooo@gmail.com</a></p>
-  <nav>
-    <a href="./">Privacy Policy</a>
-    <a href="./support.html">Support</a>
-  </nav>
-</header>
+    <header>
+      <div class="toprow">
+        <div>
+          <p class="brand">SEMLAKI LLC</p>
+          <p class="sub">Mobile app development & digital products.</p>
+        </div>
+        <div class="chips">
+          <span class="chip">Support: <a href="mailto:brainrotgoooo@gmail.com">brainrotgoooo@gmail.com</a></span>
+        </div>
+      </div>
 
-<h1>Brainrot Go — Support</h1>
+      <nav>
+        <a class="navlink" href="./">Privacy Policy</a>
+        <a class="navlink" href="./support.html">Support</a>
+      </nav>
+    </header>
 
-<div class="card">
-  <p><strong>Need help or found a bug?</strong></p>
-  <p>Email us at: <a href="mailto:brainrotgoooo@gmail.com">brainrotgoooo@gmail.com</a></p>
-</div>
+    <main>
+      <h1>Brainrot Go — Support</h1>
+      <p class="lead">Need help, found a bug, or have a question? Email us and we’ll get back to you.</p>
 
-<h2>Before you email</h2>
-<ul>
-  <li><strong>Internet connection</strong> is required.</li>
-  <li><strong>Location Services (GPS)</strong> must be enabled.</li>
-  <li>Allow location permission <strong>“While Using the App”</strong> for Brainrot Go.</li>
-</ul>
+      <div class="grid">
+        <div class="card">
+          <h3>Contact</h3>
+          <p>Email: <a href="mailto:brainrotgoooo@gmail.com">brainrotgoooo@gmail.com</a></p>
+          <div class="pill">
+            Tip: Put <code>Brainrot Go Support</code> in the subject line.
+          </div>
+        </div>
 
-<h2>When reporting a bug, include</h2>
-<ul>
-  <li>Your device model</li>
-  <li>iOS/Android version</li>
-  <li>App version</li>
-  <li>What you did + what you expected + what happened</li>
-</ul>
+        <div class="card">
+          <h3>Quick checklist</h3>
+          <ul style="margin: 8px 0 0 18px;">
+            <li>Internet connection</li>
+            <li>GPS enabled</li>
+            <li>Location permission: <strong>“While Using the App”</strong></li>
+          </ul>
+        </div>
+      </div>
 
-<h2>Privacy Policy</h2>
-<p>
-  Read the Privacy Policy here:
-  <a href="https://brainrotgoooo-png.github.io/brainrotgo-privacy/">https://brainrotgoooo-png.github.io/brainrotgo-privacy/</a>
-</p>
+      <h2>Before you email</h2>
+      <ul>
+        <li><strong>Internet connection</strong> is required.</li>
+        <li><strong>Location Services (GPS)</strong> must be enabled.</li>
+        <li>Allow location permission <strong>“While Using the App”</strong> for Brainrot Go.</li>
+      </ul>
 
+      <h2>When reporting a bug, include</h2>
+      <ul>
+        <li>Your device model</li>
+        <li>iOS/Android version</li>
+        <li>App version</li>
+        <li>Steps to reproduce (what you did)</li>
+        <li>What you expected vs. what happened</li>
+      </ul>
+
+      <h2>Privacy Policy</h2>
+      <p>
+        Read the Privacy Policy here:
+        <a href="https://brainrotgoooo-png.github.io/brainrotgo-privacy/">https://brainrotgoooo-png.github.io/brainrotgo-privacy/</a>
+      </p>
+    </main>
+
+    <footer>
+      © 2026 SEMLAKI LLC — Brainrot Go
+    </footer>
+
+  </div>
 </body>
 </html>
+
